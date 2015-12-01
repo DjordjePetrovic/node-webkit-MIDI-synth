@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->    
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/style.css">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="scripts/jquery-ui.min.js"></script>
+        <script src="scripts/modernizr.min.js"></script>
+        <script src="scripts/underscore-min.js"></script>
+        <script src="scripts/socket.io.js"></script>
+        <script src="scripts/keyboard.js"></script>
+        <script src="scripts/synth.js"></script>
+        <script src="scripts/drum.js"></script>
+        <script src="scripts/events.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/recording.js"></script>
+        <title>Sintisajzer</title>
+    </head>
+    <body>
+    <div class="container">
+        <div class="keyboard_detect">
+            <div class="bulb"></div>
+            <h2 class="keyboard_name">No Keyboard Connected</h2>
+        </div>
+        <div class="sf-01">
+
+            <div class="touch-move-scroll-blocker"></div>
+            
+            <div class="modules">
+                <div class="module osc"> 
+                    <span class="module-label">Osc</span> <br/>
+                    <div class="slider waveform">
+                        <span class="label">shape</span>
+                        <input type="range" id="osc-shape" min="0" max="3" step="1" value="2" />
+                        <div class="waveform-label">
+                            <img src="../images/triangle-wave.png" />
+                            <img src="../images/sawtooth-wave.png" />
+                            <img src="../images/square-wave.png" />
+                            <img src="../images/sine-wave.png" />
+                        </div>
+                    </div>
+
+                    <div class="slider">
+                        <span class="label">LFO</span>
+                        <input type="range" id="osc-lfo" min="0" max="1" step=".01" value="1" />
+                    </div>
+
+                </div>
+
+                <div class="module lpf">
+                    
+                    <span class="module-label">LPF</span> <br/>
+
+                    <div class="slider">
+                        <span class="label">cutoff</span>
+                        <input type="range" id="lpf-freq" min="0" max="1" step=".05" value=".7" />
+                    </div>
+
+                    
+                    <div class="slider">
+                        <span class="label">res</span>
+                        <input type="range" id="lpf-res" min="0" max="1" step=".01" value=".4" />
+                    </div>
+
+                </div>
+
+                <div class="module env">
+                
+                    <span class="module-label">env</span> <br/>
+
+                    <div class="slider">
+                        <span class="label">attack</span>
+                        <input type="range" id="env-attack" min="0.0" max="3.0" step=".01" value="0" />
+                    </div>
+
+                    <div class="slider">
+                        <span class="label">decay</span>
+                        <input type="range" id="env-decay" min="0.0" max="3.0" step=".01" value="3.0" />
+                    </div>
+                    
+                    <div class="slider">
+                        <span class="label">sustain</span>
+                        <input type="range" id="env-sustain" min="0.0" max="1.0" step=".01" value="1.0" />
+                    </div>
+
+                    <div class="slider">
+                        <span class="label">release</span>
+                        <input type="range" id="env-release" min="0.0" max="1.0" step=".01" value="1.0" />
+                    </div>
+
+                </div>
+
+
+                <div class="module lfo">
+                    
+                    <span class="module-label">LFO</span> <br/>
+
+                    <div class="slider waveform">
+                        <span class="label">shape</span>
+                        <input type="range" id="lfo-shape" min="0" max="3" step="1" value="0" />
+                        <div class="waveform-label">
+                            <img src="../images/triangle-wave.png" />
+                            <img src="../images/sawtooth-wave.png" />
+                            <img src="../images/square-wave.png" />
+                            <img src="../images/sine-wave.png" />
+                        </div>
+                    </div>
+
+                    <div class="slider">
+                        <span class="label">rate</span>
+                        <input type="range" id="lfo-rate" min="0" max="1" step=".01" value="0.4" />
+                    </div>
+
+                </div>                
+
+            </div>
+            <br />
+
+            <div id="piano-keys">
+                <div class="key" data-note="C">
+                    <div class="sharp key" data-note="C#"></div>
+                </div>
+                
+                <div class="key" data-note="D">
+                    <div class="sharp key" data-note="D#"></div>
+                </div>
+                
+                <div class="key" data-note="E"></div>
+    
+                <div class="key" data-note="F">
+                    <div class="sharp key" data-note="F#"></div>
+                </div>
+   
+                <div class="key" data-note="G">
+                    <div class="sharp key" data-note="G#"></div>
+                </div>
+   
+                <div class="key" data-note="A">
+                    <div class="a sharp key"  data-note="A#"></div>
+                </div>
+                
+                <div class="key" data-note="B"></div>
+
+
+            </div>
+
+        </div>
+
+        <div class="beatmaker">
+            <div class="bars">
+                <ul id="beat">
+                    <li>
+                        <ul id="tracker" class="soundrow">
+                            <li class="block col_0"></li>
+                            <li class="block col_1"></li>
+                            <li class="block col_2"></li>
+                            <li class="block col_3"></li>
+                            <li class="block col_4"></li>
+                            <li class="block col_5"></li>
+                            <li class="block col_6"></li>
+                            <li class="block col_7"></li>
+                        </ul>
+                    </li>
+                </ul>  
+            </div>
+            <div class="bpm">
+                <div id="temposlider"></div>
+                <div class="bpm_value">
+                    <span id="tempovalue"></span> <abbr title="Beats per minute">BPM</abbr>
+                </div>
+            </div>
+        </div>
+        <div class="boxs">
+                <img class="control_btn pause" src="img/pause.png">
+                <img class="control_btn play"  src="img/play.png">
+                <img class="control_btn stop"  src="img/stop.png">
+            </div>
+        <section id="sounds">
+            <audio id="sound_bass_hit" autobuffer>
+                    <source src="sounds/kick.wav" type="audio/x-wav">
+            </audio>
+            <audio id="sound_clap" autobuffer>
+                    <source src="sounds/snare.wav" type="audio/x-wav">
+            </audio>
+            <audio id="sound_cow_bell" autobuffer>
+                    <source src="sounds/perc.wav" type="audio/x-wav">
+            </audio>
+            <audio id="sound_crash_cymbal" autobuffer>
+                    <source src="sounds/ride.wav" type="audio/x-wav">
+            </audio>
+        </section>
+        <img class="speaker" src="img/davidimo.png">
+            <div class="recording_area">
+                <p>Press R for recording, once done, press S to stop and grab the WAV file.</p>
+                <p id="output" class="output_msg"></p>
+        </div>
+    </div>
+
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade yourf browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+</body>
+</html>
+
+

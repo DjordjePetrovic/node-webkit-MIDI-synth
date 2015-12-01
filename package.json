@@ -1,0 +1,23 @@
+{ 
+  "main": "views/start.html",
+  "name": "Web Sint",
+  "window" : {
+    "toolbar": false,
+    "width": 1400,
+    "height": 600,
+    "resizable": false,
+    "title": "Web Synth - Diplomski"
+  },
+  "description": "Midi keyboard app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.4.7",
+    "socket.io": "~0.9.16",
+    "midi": "~0.9.0"
+  },
+  "engines": {
+    "node": "0.8.4",
+    "npm": "1.1.49"
+  }
+}
